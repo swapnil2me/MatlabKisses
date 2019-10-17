@@ -1,14 +1,14 @@
-function createIMGsc(locn,flnm,bkg,ap,sweep)
+function createIMGsc(locn,flnm,bkg,bkgV,ap,sweep)
 cd(locn)
 direct = 'Mat_file';
 load([direct,'\',flnm,'.mat'],'data');
 %% sort data
-if nargin == 4
+if nargin == 5
     dc = unique([data.VgDC]');
     gAc = unique([data.VgAC]');
     sdAc = unique([data.VsdAC]');
     if length(dc)>2
-        sweep='vgdc';
+        sweep='vgdc'
     elseif length(gAc)>2
         sweep='vgac';
     elseif length(sdAc)>2
@@ -52,14 +52,14 @@ map = [map3(60:1:end,:);map2(80:1:end-5,:);map1(end:-1:30,:)];
 if strcmp(ap,'amp')
     ampF=[data.AmpF].*1e12;
     if strcmp(bkg,'sub')
-        bkgD = [data([data(:).VgDC]==-5).AmpF].*1e12;
+        bkgD = [data([data(:).VgAC]==bkgV).AmpF].*1e12;
     elseif strcmp(bkg,'na')
         bkgD = zeros(length(ampF),1).*1e12;
     end
 elseif strcmp(ap,'phs')
-    ampF=([data.PhasF]);
+    ampF=unwrap(([data.PhasF]).*pi./180);
     if strcmp(bkg,'sub')
-        bkgD = [data([data(:).VgDC]==-5).PhasF];
+        bkgD = unwrap([data([data(:).VgAC]==bkgV).PhasF].*pi./180);
     elseif strcmp(bkg,'na')
         bkgD = zeros(length(ampF),1);
     end
@@ -89,7 +89,7 @@ if strcmp(ap,'amp')
     end
     c.Label.String = ['I_{sd} ',uni];
 elseif strcmp(ap,'phs')
-    uni = '(Deg.)';
+    uni = '(Rad.)';
     c.Label.String = ['Phase ',uni];
 
 end
