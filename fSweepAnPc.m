@@ -21,7 +21,7 @@ for i=0:N
     if i == 0
         [A,P]=readLIAsens(Lia,3000);
     end
-    [A,P]=readLIAsens(Lia,500);
+    [A,P]=readLIAsens(Lia,300);
     data(i+1).Freq=F;
     data(i+1).Amp=A;
     data(i+1).Phs=P;

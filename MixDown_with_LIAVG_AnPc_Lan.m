@@ -8,7 +8,7 @@ clc;
 %% Set the Instruments
 
 
-RsgVs = openAnPclan('169.254.7.42');
+RsgVs = openAnPclan('169.254.7.87');
 RsgVg = openAnPclan('169.254.7.42');
 Lia =openLIAgpibCable(8);
 %% Drive Condition Space
