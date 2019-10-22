@@ -3,8 +3,9 @@ function fig=create3D(locn,flnm,sweep,Ptype)
 % Swapnil More
 % 2018-Oct-08
 cd(locn)
+stp=1;
 direct = 'Mat_file';
-load([direct,'\',flnm,'.mat'],'data');
+load([direct,'/',flnm,'.mat'],'data');
 if strcmp(sweep,'vgac')
 x = [data(:).VgAC]';
 end
@@ -26,7 +27,7 @@ yBMat = repmat(yB,1,length(x));
 end
 fig=figure(fignum);hold on;
 if nargin==3
-    for i=1:length(x)
+    for i=1:stp:length(x)
         
         plot3(yFMat,xMat(:,i),data(i).AmpF,'LineWidth',0.5,'LineStyle','-','Color','r')
         if tf
@@ -37,7 +38,7 @@ if nargin==3
     clear all;
 elseif  nargin==4
     if strcmp(Ptype,'amp')
-        for i=1:length(x)
+        for i=1:stp:length(x)
             plot3(yFMat,xMat(:,i),data(i).AmpF,'LineWidth',0.5,'LineStyle','-','Color','r')
             if tf
             plot3(yBMat,xMat(:,i),data(i).AmpB,'LineWidth',0.5,'LineStyle','-','Color','b')
@@ -46,7 +47,7 @@ elseif  nargin==4
         Plot_Prop_3D(fig,'','','','')
         clear all;
     elseif strcmp(Ptype,'phs')
-        for i=1:length(x)
+        for i=1:stp:length(x)
             plot3(yFMat,xMat(:,i),([data(i).PhasF].*pi./180),'LineWidth',0.5,'LineStyle','-','Color','r')
             if tf
             plot3(yBMat,xMat(:,i),flipud((flipud([data(i).PhasB].*pi./180))),'LineWidth',0.5,'LineStyle','-','Color','b')

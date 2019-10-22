@@ -1,7 +1,7 @@
 function createIMGsc(locn,flnm,bkg,bkgV,ap,sweep)
 cd(locn)
 direct = 'Mat_file';
-load([direct,'\',flnm,'.mat'],'data');
+load([direct,'/',flnm,'.mat'],'data');
 %% sort data
 if nargin == 5
     dc = unique([data.VgDC]');
