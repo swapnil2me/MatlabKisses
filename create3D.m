@@ -3,7 +3,7 @@ function fig=create3D(locn,flnm,sweep,Ptype)
 % Swapnil More
 % 2018-Oct-08
 cd(locn)
-stp=1;
+stp=5;
 direct = 'Mat_file';
 load([direct,'/',flnm,'.mat'],'data');
 if strcmp(sweep,'vgac')
