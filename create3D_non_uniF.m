@@ -4,7 +4,7 @@ function fig=create3D_non_uniF(locn,flnm,sweep,Ptype)
 % 2018-Oct-08
 cd(locn)
 direct = 'Mat_file';
-load([direct,'\',flnm,'.mat'],'data');
+load([direct,'/',flnm,'.mat'],'data');
 if strcmp(sweep,'vgac')
     x = [data(:).VgAC]';
 end

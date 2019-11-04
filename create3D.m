@@ -3,7 +3,11 @@ function fig=create3D(locn,flnm,sweep,Ptype)
 % Swapnil More
 % 2018-Oct-08
 cd(locn)
+<<<<<<< HEAD
 stp = 5;
+=======
+stp=5;
+>>>>>>> 36e1d2c2b642105cda3b368dcd50fed88d9b6bf6
 direct = 'Mat_file';
 load([direct,'/',flnm,'.mat'],'data');
 if strcmp(sweep,'vgac')
@@ -48,7 +52,11 @@ elseif  nargin==4
         clear all;
     elseif strcmp(Ptype,'phs')
         for i=1:stp:length(x)
+<<<<<<< HEAD
             plot3(yFMat,xMat(:,i),unwrap([data(i).PhasF].*pi./180),'LineWidth',0.5,'LineStyle','-','Color','r')
+=======
+            plot3(yFMat,xMat(:,i),([data(i).PhasF].*pi./180),'LineWidth',0.5,'LineStyle','-','Color','r')
+>>>>>>> 36e1d2c2b642105cda3b368dcd50fed88d9b6bf6
             if tf
             plot3(yBMat,xMat(:,i),flipud(unwrap(flipud([data(i).PhasB].*pi./180))),'LineWidth',0.5,'LineStyle','-','Color','b')
             end

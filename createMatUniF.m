@@ -3,6 +3,7 @@ function createMatUniF(locn,sweep,fnm)
 % Location must have forward sweep data
 % frequencie range must be same with equal step size
 %%
+locn=strjoin(regexp(locn,'\','split'),'/');
 cd(locn);
 filesF  = dir('*_FWD_*.csv');
 filesB  = dir('*_BKW_*.csv');
