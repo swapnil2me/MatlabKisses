@@ -94,6 +94,6 @@ end
 data = Fdata;
 direct = 'Mat_file';
 mkdir(direct);
-save([direct,'\',fnm,'.mat'],'data');
+save([direct,'/',fnm,'.mat'],'data');
 clear all;
 end
