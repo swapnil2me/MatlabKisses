@@ -1,6 +1,8 @@
-function data = fSweepAnPc(sF,eF,dF,mx,GTsg,SDsg,Lia)
+function data = fSweepAnPc(sF,eF,dF,mx,GTsg,SDsg,Lia,tconst)
+%%
+% 2021-04-21 Added tconst as a function variable
 %% Freq sweep
-mx=mx*1e-6;
+mx = mx*1e-6;
 N = round(abs(eF-sF)/dF);
 if sF>eF
     dF = -dF;
@@ -12,16 +14,19 @@ data(N) = struct();
 %data.Amp=zeros(N,1);
 %data.Phs=zeros(N,1);
 for i=0:N
-    F =F+dF;
-    mF = F-mx;
+    F = F + dF;
+    mF = F - mx;
     
-    fprintf(GTsg,['freq ',num2str(F*1e6)])
-    fprintf(SDsg,['freq ',num2str(mF*1e6)])
+    %     disp(['freq ',num2str(mF*1e6)]);
+    
+    fprintf(GTsg,['freq ',num2str(F*1e6)]);
+    fprintf(SDsg,['freq ',num2str(mF*1e6)]);
     
     if i == 0
-        [A,P]=readLIAsens(Lia,3000);
+        [A,P]=readLIAsens(Lia,tconst*2);
+    else
+        [A,P]=readLIAsens(Lia,tconst);
     end
-    [A,P]=readLIAsens(Lia,300);
     data(i+1).Freq=F;
     data(i+1).Amp=A;
     data(i+1).Phs=P;

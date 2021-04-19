@@ -1,4 +1,4 @@
-function createMatUniF(locn,sweep,fnm)
+function createMatUniF(locn,sweep,fnm,saveLocn)
 %% Conditions
 % Location must have forward sweep data
 % frequencie range must be same with equal step size
@@ -11,6 +11,9 @@ filesB  = dir('*_BKW_*.csv');
 filesF(:)=filesF(b);
 [~,b]=sort([filesB(:).datenum],'descend');
 filesB(:)=filesB(b);
+%% Omit the latest file
+filesF=filesF(2:end);
+filesB=filesB(2:end);
 %% Name String Format
 StrDC = 'V_VgDC_';
 StrVg = 'mV_VgAC_';
@@ -30,11 +33,11 @@ for i=1:Nf
     Fdata(i).VsdAC = str2double(filesF(i).name(iVg+length(StrVg):iVs-1));
     tempD = readtable(filesF(i).name);
     if i==1
-
-    Fdata(1).FreqF = tempD.Freq;
+        
+        Fdata(1).FreqF = tempD.Frequency;
     end
-    Fdata(i).AmpF = tempD.Amp;
-    Fdata(i).PhasF = tempD.Phs;
+    Fdata(i).AmpF = tempD.Amplitude;
+    Fdata(i).PhasF = tempD.Phase;
 end
 if strcmp(sweep,'vgdc')
     [~,b]= sort([Fdata(:).VgDC],'ascend');
@@ -59,10 +62,10 @@ if length(filesB)>1
         Bdata(i).VsdAC = str2double(filesB(i).name(iVg+length(StrVg):iVs-1));
         tempD = readtable(filesB(i).name);
         if i==1
-        Bdata(1).FreqB = tempD.Freq;
+            Bdata(1).FreqF = tempD.Frequency;
         end
-        Bdata(i).AmpB = tempD.Amp;
-        Bdata(i).PhasB = tempD.Phs;
+        Bdata(i).AmpF = tempD.Amplitude;
+        Bdata(i).PhasF = tempD.Phase;
     end
     if strcmp(sweep,'vgdc')
         [~,b]= sort([Bdata(:).VgDC],'ascend');
@@ -93,8 +96,12 @@ end
 
 %% Save .mat file
 data = Fdata;
-direct = 'Mat_file';
-mkdir(direct);
+if nargin == 3
+    direct = 'Mat_file';
+    mkdir(direct);
+else
+    direct = saveLocn;
+end
 save([direct,'/',fnm,'.mat'],'data');
 clear all;
 end

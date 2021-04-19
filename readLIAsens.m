@@ -1,4 +1,5 @@
 function [A,P] = readLIAsens(LIA,tCon)
+tic
 pause(tCon/1000)
 ovI =str2double(query(LIA, 'lias?0'));
 ovT =str2double(query(LIA, 'lias?1'));
@@ -9,7 +10,7 @@ while ovI==1
     ovI =str2double(query(LIA, 'lias?0'));
 end
 
-while ovOP ==1
+while ovOP == 1
     
     ssi = str2double(query(LIA, 'SENS ?'));
     disp(['Increasing LIA sensitivity level: ',num2str(ssi)]);
@@ -23,7 +24,10 @@ while ovT ==1
 end
 while str2double(unlok) == 1
     %clc;
-    disp('LIA Unlocked')
+    t = toc;
+    if t > 15
+        disp('LIA Unlocked')
+    end
     pause(tCon/1000)
     unlok = query(LIA, 'lias?3');
 end

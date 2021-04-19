@@ -1,17 +1,17 @@
-function createIMGsc(locn,flnm,bkg,bkgV,ap,sweep)
+function createIMGsc(locn,flnm,bkg,ap,sweep)
 cd(locn)
 direct = 'Mat_file';
 load([direct,'/',flnm,'.mat'],'data');
 %% sort data
-if nargin == 5
+if nargin == 4
     dc = unique([data.VgDC]');
     gAc = unique([data.VgAC]');
     sdAc = unique([data.VsdAC]');
-    if length(dc)>2
+    if length(dc)>=2
         sweep='vgdc'
-    elseif length(gAc)>2
+    elseif length(gAc)>=2
         sweep='vgac';
-    elseif length(sdAc)>2
+    elseif length(sdAc)>=2
         sweep='vsdac';
     end
 end
@@ -49,27 +49,28 @@ mapF = map;
 map = [map3(60:1:end,:);map2(80:1:end-5,:);map1(end:-1:30,:)];
 %mapF = map;
 %===================================
+bkgV = min(abs([data(:).VgDC]))
 if strcmp(ap,'amp')
     ampF=[data.AmpF].*1e12;
     if strcmp(bkg,'sub')
-        bkgD = [data([data(:).VgAC]==bkgV).AmpF].*1e12;
+        bkgD = [data([data(:).VgDC]==bkgV).AmpF].*1e12;
     elseif strcmp(bkg,'na')
-        bkgD = zeros(length(ampF),1).*1e12;
+        bkgD = 0;%zeros(length(ampF),1).*1e12;
     end
 elseif strcmp(ap,'phs')
     ampF=unwrap(([data.PhasF]).*pi./180);
     if strcmp(bkg,'sub')
-        bkgD = unwrap([data([data(:).VgAC]==bkgV).PhasF].*pi./180);
+        bkgD = unwrap([data([data(:).VgDC]==bkgV).PhasF].*pi./180);
     elseif strcmp(bkg,'na')
-        bkgD = zeros(length(ampF),1);
+        bkgD = 0;%zeros(length(ampF),1);
     end
 end
 
 %ampB=[data.AmpB];
 fig=figure(fignum);
 if strcmp(sweep,'vgdc')
-    fig;imagesc([data.VgDC],[data.FreqF],(ampF-bkgD));
-    title('Freq v/s Vg_{DC}');
+    fig;imagesc([data.VgDC],[data.FreqF],(ampF-bkgD))
+    title('Freq v/s Vg_{DC}')
 elseif strcmp(sweep,'vgac')
     fig;imagesc([data.VgAC]',[data.FreqF],(ampF-bkgD));
     title('Freq v/s Vg_{AC}');

@@ -13,17 +13,18 @@ LIA_Inst  = SRS830(8,mixDF);
 %% Sgen Voltages
 Vs   = 300;VsAC_Inst.rampV(Vs);
 VsAC_Inst.Attn = 36;
-VgAC   = 300:1:360;
+VgAC   = 300:1:305;
 VgAC_Inst.Attn = 16;
 freQS = 10:0.5:12;
 vgDC = -10;
 %% Data Handeling
 locn       = 'D:\Swapnil\06_01_Matlab\testFolder';
 locn       = strjoin(regexp(locn,'\','split'),'/');
-formatFWD = '%.2fV_VgDC_%0.2fmV_VsdAC_%3.4fMhz_VgAC_FWD_%0.2f_%0.2f_mV';
-formatBKW = '%.2fV_VgDC_%0.2fmV_VsdAC_%3.4fMhz_VgAC_BKW_%0.2f_%0.2f_mV';
+formatFWD  = '%.2fV_VgDC_%0.2fmV_VsdAC_%3.4fMhz_VgAC_FWD_%0.2f_%0.2f_mV';
+formatBKW  = '%.2fV_VgDC_%0.2fmV_VsdAC_%3.4fMhz_VgAC_BKW_%0.2f_%0.2f_mV';
 %% The Loop
 for i = 1:length(vgDC)
+    fprintf(LIA_Inst.instR, ['SENS ',num2str(2)])
     LIA_Inst.rampVaux(1,vgDC(i)*1000,rampSteps,rampPause);
     for j = 1:length(freQS)
         VgAC_Inst.setFreq(freQS(j))
@@ -68,3 +69,5 @@ LIA_Inst.rampVaux(1,0,rampSteps,rampPause)
 VgAC_Inst.rampV(0)
 VsAC_Inst.rampV(0)
 fclose('all');
+close all;
+disp('!!! RUN COMPLETE !!!')

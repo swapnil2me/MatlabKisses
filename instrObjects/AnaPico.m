@@ -72,6 +72,7 @@ classdef AnaPico
         
         %% Close
         function close(obj)
+            obj.rampV(3);
             fclose(obj.instR);
         end
         
