@@ -5,7 +5,7 @@ function createMatUniF(locn,sweep,fnm,saveLocn)
 %%
 locn=strjoin(regexp(locn,'\','split'),'/');
 cd(locn);
-filesF  = dir('*_FWD_*.csv');
+filesF  = dir('*_FWD*.csv');
 filesB  = dir('*_BKW_*.csv');
 [~,b]=sort([filesF(:).datenum],'descend');
 filesF(:)=filesF(b);
@@ -22,7 +22,6 @@ StrVs = 'mV_VsdAC';
 Nf = length(filesF);
 
 Fdata(Nf) = struct();
-
 %% Extract Drive Conditions
 for i=1:Nf
     idc = strfind(filesF(i).name,StrDC);
@@ -34,10 +33,10 @@ for i=1:Nf
     tempD = readtable(filesF(i).name);
     if i==1
         
-        Fdata(1).FreqF = tempD.Frequency;
+        Fdata(1).FreqF = tempD.Freq;
     end
-    Fdata(i).AmpF = tempD.Amplitude;
-    Fdata(i).PhasF = tempD.Phase;
+    Fdata(i).AmpF = tempD.Amp;
+    Fdata(i).PhasF = tempD.Phs;
 end
 if strcmp(sweep,'vgdc')
     [~,b]= sort([Fdata(:).VgDC],'ascend');
@@ -62,10 +61,10 @@ if length(filesB)>1
         Bdata(i).VsdAC = str2double(filesB(i).name(iVg+length(StrVg):iVs-1));
         tempD = readtable(filesB(i).name);
         if i==1
-            Bdata(1).FreqF = tempD.Frequency;
+            Bdata(1).FreqB = tempD.Freq;
         end
-        Bdata(i).AmpF = tempD.Amplitude;
-        Bdata(i).PhasF = tempD.Phase;
+        Bdata(i).AmpB = tempD.Amp;
+        Bdata(i).PhasB = tempD.Phs;
     end
     if strcmp(sweep,'vgdc')
         [~,b]= sort([Bdata(:).VgDC],'ascend');
