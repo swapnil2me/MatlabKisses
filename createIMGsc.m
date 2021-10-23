@@ -16,16 +16,16 @@ if nargin == 4
     end
 end
 %%
-[mapF,num,typ] =brewermap(20,'RdBu');
-[mapF,num,typ] =brewermap(120,'Blues');
+[map1,num,typ] =brewermap(20,'RdBu');
+[mapF,num,typ] =brewermap(90,'Blues');
 % [mapF,num,typ] =brewermap(10,'Spectral');
-map = flipud(mapF);
-map = [map(5:8,:);[1,1,1];flipud(map(1:8,:))];
+%map = flipud(mapF);
+%mapF = [map1(5:8,:);[1,1,1];flipud(map2(1:8,:))];
 %===================================
 [map1,num,typ] =brewermap(120,'PuRd');
 [map2,num,typ] =brewermap(120,'RdYlBu');
 [map3,num,typ] =brewermap(120,'GnBu');
-%map = [map1(1:end-18,:);map2;map3(end:-1:18,:)];
+% map = [map1(1:end-18,:);map2;map3(end:-1:18,:)];
 
 %===================================
 [map1,num,typ] =brewermap(30,'PuRd');
@@ -49,13 +49,13 @@ map = map;
 [map1,num,typ] =brewermap(120,'PuRd');
 [map2,num,typ] =brewermap(120,'PuBu');
 [map3,num,typ] =brewermap(120,'Greens');
-map = [map3(75:1:end,:);map2(100:1:end-5,:);map1(end:-1:15,:)];
+mapF = [map3(75:1:end,:);map2(100:1:end-5,:);map1(end:-1:15,:)];
 % mapF = map;
 %%
 % mapF = brewermap(20,'OrRd');
-% mapF = brewermap(20,'YlGnBu');
+mapF = brewermap(90,'Spectral');
 %===================================
-bkgV =min(abs([data(:).VgDC]))
+bkgV =1*min(abs([data(:).VgDC]))
 if strcmp(ap,'amp')
     ampF=[data.AmpF].*1e9;
     if strcmp(bkg,'sub')

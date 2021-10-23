@@ -31,12 +31,10 @@ for i=1:Nf
     Fdata(i).VgAC = str2double(filesF(i).name(idc+length(StrDC):iVg-1));
     Fdata(i).VsdAC = str2double(filesF(i).name(iVg+length(StrVg):iVs-1));
     tempD = readtable(filesF(i).name);
-    if i==1
-        
-        Fdata(1).FreqF = tempD.Freq;
-    end
+    Fdata(1).FreqF = tempD.Freq;
     Fdata(i).AmpF = tempD.Amp;
     Fdata(i).PhasF = tempD.Phs;
+    Fdata(i).timeStamp = datetime([filesF(i).datenum],'ConvertFrom','datenum');
 end
 if strcmp(sweep,'vgdc')
     [~,b]= sort([Fdata(:).VgDC],'ascend');
@@ -65,6 +63,8 @@ if length(filesB)>1
         end
         Bdata(i).AmpB = tempD.Amp;
         Bdata(i).PhasB = tempD.Phs;
+
+        Bdata(i).timeStamp = datetime([filesB(i).datenum],'ConvertFrom','datenum');
     end
     if strcmp(sweep,'vgdc')
         [~,b]= sort([Bdata(:).VgDC],'ascend');
